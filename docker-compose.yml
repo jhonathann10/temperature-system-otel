@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8083:8080"
+      - "8084:8081"
+    depends_on:
+      - zipkin
+    networks:
+      - app-network
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
